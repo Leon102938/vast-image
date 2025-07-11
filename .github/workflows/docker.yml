@@ -3,6 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -24,15 +25,13 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.GHCR_TOKEN }}
 
     - name: Build and push Docker image (no cache)
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
-        tags: ghcr.io/leon102938/runpod-test-image:latest
-
-
+        tags: ghcr.io/leon102938/vast-image:latest
 
 
