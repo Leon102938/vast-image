@@ -31,7 +31,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/leon102938/vast-image:latest
+        tags: ghcr.io/leon102938/runpod-test-image:latest
 
 
 
