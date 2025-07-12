@@ -46,7 +46,8 @@ EXPOSE 8000
 EXPOSE 8888
 
 # 🚀 Start
-CMD ["bash", "start.sh"]
+ENTRYPOINT ["/bin/bash", "start.sh"]
+
 
 
 
