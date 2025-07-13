@@ -3,20 +3,17 @@
 # Tools-Konfiguration laden
 source ./tools.config
 
-# ============ Volumen Mount ============
+# ============ Volume Mount ============
 mkdir -p /workspace/ai-core
 
-if ! rclone mount server-volume: /workspace/ai-core \
+rclone mount server-volume: /workspace/ai-core \
   --allow-other \
   --dir-cache-time 30s \
   --poll-interval 30s \
   --vfs-read-chunk-size 128M \
   --vfs-cache-mode writes \
   --vfs-cache-max-age 1m \
-  --daemon
-  echo "❌ Rclone mount fehlgeschlagen!"
-  exit 1
-fi
+  --daemon || { echo "❌ Rclone mount fehlgeschlagen!"; exit 1; }
 
 
 # ============ 🔧 PYTHONPATH ============
