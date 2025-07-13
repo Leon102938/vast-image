@@ -3,18 +3,6 @@
 # Tools-Konfiguration laden
 source ./tools.config
 
-# ============ Volume Mount ============
-mkdir -p /workspace/ai-core
-
-rclone mount server-volume: /workspace/ai-core \
-  --allow-other \
-  --dir-cache-time 30s \
-  --poll-interval 30s \
-  --vfs-read-chunk-size 128M \
-  --vfs-cache-mode writes \
-  --vfs-cache-max-age 1m \
-  --daemon || { echo "❌ Rclone mount fehlgeschlagen!"; exit 1; }
-
 
 # ============ 🔧 PYTHONPATH ============
 export PYTHONPATH="$PYTHONPATH:/workspace/app"
@@ -46,6 +34,18 @@ if [ "$FASTAPI" == "on" ]; then
 fi
 
 
+# ============ Volume Mount ============
+
+mkdir -p /workspace/ai-core
+
+rclone mount server-volume: /workspace/ai-core \
+  --allow-other \
+  --dir-cache-time 30s \
+  --poll-interval 30s \
+  --vfs-read-chunk-size 128M \
+  --vfs-cache-mode writes \
+  --vfs-cache-max-age 1m \
+  --daemon || echo "⚠️ Rclone mount fehlgeschlagen – wird später manuell gefixt."
 
 
 # ============ ✅ ABSCHLUSS ============
