@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y software-properties-common && \
 
 
 
-# 🔧 GoTTY installieren (binary direkt holen – keine Pip-Version)
-RUN wget https://github.com/yudai/gotty/releases/download/v0.2.0/gotty_linux_amd64.tar.gz && \
+# 🔧 GoTTY installieren (v1.0.1, Linux AMD64)
+RUN wget https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_amd64.tar.gz && \
     tar -xvzf gotty_linux_amd64.tar.gz && \
     mv gotty_linux_amd64 /usr/local/bin/gotty && \
     chmod +x /usr/local/bin/gotty && \
