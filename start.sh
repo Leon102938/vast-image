@@ -3,21 +3,20 @@
 # Tools-Konfiguration laden
 source ./tools.config
 
+# ============ Volumen Mount ============
+mkdir -p /workspace/ai-core
 
-# 🌍 BASE_URL automatisch setzen
-echo "🌐 Ermittle dynamische RunPod Proxy-URL..."
-
-POD_ID=${RUNPOD_POD_ID}
-
-if [ -z "$POD_ID" ]; then
-    echo "❌ FEHLER: RUNPOD_POD_ID nicht gesetzt – .env nicht geschrieben!"
-else
-    BASE_URL="https://${POD_ID}-8000.proxy.runpod.net"
-    export BASE_URL
-    echo "BASE_URL=$BASE_URL" > /workspace/.env
-    echo "✅ BASE_URL erfolgreich gesetzt: $BASE_URL"
+if ! rclone mount server-volume: /workspace/ai-core \
+  --allow-other \
+  --dir-cache-time 30s \
+  --poll-interval 30s \
+  --vfs-read-chunk-size 128M \
+  --vfs-cache-mode writes \
+  --vfs-cache-max-age 1m \
+  --daemon
+  echo "❌ Rclone mount fehlgeschlagen!"
+  exit 1
 fi
-
 
 
 # ============ 🔧 PYTHONPATH ============
@@ -48,11 +47,6 @@ if [ "$FASTAPI" == "on" ]; then
   echo "🚀 Starte zentrale FastAPI (Port 8000)..."
   nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 > /workspace/fastapi.log 2>&1 &
 fi
-
-
-
-# Starte Web-Terminal (GoTTY)
-nohup gotty --port 3000 --permit-write --reconnect bash > /dev/null 2>&1 &
 
 
 
