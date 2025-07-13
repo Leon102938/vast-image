@@ -11,6 +11,15 @@ RUN apt-get update && apt-get install -y software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
 
+
+# 🔧 GoTTY installieren (binary direkt holen – keine Pip-Version)
+RUN wget https://github.com/yudai/gotty/releases/download/v0.2.0/gotty_linux_amd64.tar.gz && \
+    tar -xvzf gotty_linux_amd64.tar.gz && \
+    mv gotty_linux_amd64 /usr/local/bin/gotty && \
+    chmod +x /usr/local/bin/gotty && \
+    rm gotty_linux_amd64.tar.gz
+
+
 # 🔁 Python / pip verlinken
 RUN ln -sf /usr/bin/python3.11 /usr/bin/python && ln -sf /usr/bin/pip3 /usr/bin/pip
 
@@ -44,6 +53,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 📢 Ports freigeben
 EXPOSE 8000
 EXPOSE 8888
+EXPOSE 3000
+
 
 
 
