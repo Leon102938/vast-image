@@ -3,10 +3,6 @@
 # Tools-Konfiguration laden
 source ./tools.config
 
-# ============ 🧲 MODELL-DOWNLOAD ============
-echo "📦 Starte Initialisierungs-Skript für Modelle ..."
-bash /workspace/init.sh
-echo "✅ Modelle wurden geprüft bzw. heruntergeladen."
 
 # ============ 🔧 PYTHONPATH ============
 export PYTHONPATH="$PYTHONPATH:/workspace/app"
