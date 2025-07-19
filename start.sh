@@ -3,6 +3,10 @@
 # Tools-Konfiguration laden
 source ./tools.config
 
+# ============ 🧲 MODELL-DOWNLOAD ============
+echo "📦 Starte Initialisierungs-Skript für Modelle ..."
+bash /workspace/init.sh
+echo "✅ Modelle wurden geprüft bzw. heruntergeladen."
 
 # ============ 🔧 PYTHONPATH ============
 export PYTHONPATH="$PYTHONPATH:/workspace/app"
@@ -30,11 +34,8 @@ fi
 # ============ 🔷 FASTAPI (Port 8000) ============
 if [ "$FASTAPI" == "on" ]; then
   echo "🚀 Starte zentrale FastAPI (Port 8000)..."
-  nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 > /workspace/fastapi.log 2>&1 &
+  nohup uvicorn app.main:app --host 0.0.0.0 --port=8000 > /workspace/fastapi.log 2>&1 &
 fi
-
-
-
 
 # ============ ✅ ABSCHLUSS ============
 echo "✅ Dienste wurden gestartet: Modelle geladen, JupyterLab und/oder FastAPI aktiv (je nach config)"
